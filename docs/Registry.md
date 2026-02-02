@@ -12,6 +12,6 @@ Set-ItemProperty HKCU:\Software\Microsoft\Windows\CurrentVersion\ThemeManager "P
 ~~~
 
 !!! warning
-    This must be ran from the users profile, otherwise you can navigate to their hive (if loaded) and supply the same values.
+    **This must be ran from the users profile**, otherwise you can navigate to their hive (if loaded) and supply the same values.
 
 ---

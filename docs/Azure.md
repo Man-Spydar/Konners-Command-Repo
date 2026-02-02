@@ -7,6 +7,19 @@ Commands specific to working with Azure cloud resources and identity services
 
 ## **Microsoft Graph**
 
+### Microsoft Graph PowerShell SDK
+Needed for all modern Azure / Entra ID management via Graph.
+
+??? info "Install Graph Module"
+    Only needed if you have never installed MS-Graph
+    ~~~powershell
+    Install-Module -Name "Microsoft.Graph" -Force
+    ~~~
+~~~powershell
+Import-Module "Microsoft.Graph"
+~~~
+---
+
 ### Connect to Microsoft Graph (US Gov)
 Needed when managing Entra ID users, groups, and directory objects via Microsoft Graph.
 
@@ -17,17 +30,23 @@ Connect-MgGraph `
 ~~~
 
 !!! warning
-    Only connect with "Write" permissions if you need to change data, otherwise you should only connect with "Read"
-
-??? note "Click for User/Group Read Only"
-    ~~~powershell
-    Connect-MgGraph -Scopes "User.Read.All","Group.Read.All" -Environment USGov
-    ~~~
+    Exercise extreme caution when connecting to MS-Graph with "Write" permissions as any change you push will go into effect
 
 ??? note "Click for User/Group Read & Write"
     ~~~powershell
     Connect-MgGraph -Scopes "User.ReadWrite.All","Group.ReadWrite.All" -Environment USGov
     ~~~
+
+!!! info
+    A new tab in your default browser will open prompting you to sign in. You should use your "onmicrosoft" account as your other account will not have useful permissions.
+---
+
+### Verify Graph Connection Context
+Used to confirm tenant, environment, and granted scopes.
+
+~~~powershell
+Get-MgContext
+~~~
 
 ---
 
@@ -76,23 +95,3 @@ Connect-ExchangeOnline -ExchangeEnvironmentName O365USGovGCCHigh
 
 ---
 
-## Microsoft Graph Module
-
-### Microsoft Graph PowerShell SDK
-Needed for all modern Azure / Entra ID management via Graph.
-
-~~~powershell
-Install-Module -Name "Microsoft.Graph" -Force
-Import-Module "Microsoft.Graph"
-~~~
-
----
-
-### Verify Graph Connection Context
-Used to confirm tenant, environment, and granted scopes.
-
-~~~powershell
-Get-MgContext
-~~~
-
----

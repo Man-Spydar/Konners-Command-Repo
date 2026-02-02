@@ -1,0 +1,101 @@
+# MkDocs Material – Note Blocks (Admonitions) Reference
+
+> Requires:
+> markdown_extensions:
+>   - admonition
+>   - pymdownx.details
+
+---
+
+## Basic Note Block
+
+!!! note
+    This is a basic note block.
+
+---
+
+## Common Admonition Types
+
+!!! note
+    General information or context.
+
+!!! info
+    Neutral, factual information.
+
+!!! tip
+    Best practices or helpful advice.
+
+!!! warning
+    Use caution. Possible impact or risk.
+
+!!! danger
+    High risk. Can cause outages or data loss.
+
+---
+
+## Custom Title
+
+!!! warning "GCC High Limitation"
+    Microsoft Graph behaves differently in GCC High.
+
+!!! note "Service Desk Use"
+    Safe for Tier 1 and Tier 2 troubleshooting.
+
+---
+
+## Collapsible (Expandable) Note Blocks
+
+??? note "Click to expand"
+    This content is hidden until clicked.
+
+??? warning "Why this is risky"
+    Detailed explanation of the risk.
+
+---
+
+## Admonitions with Code Blocks
+
+!!! warning "Production Impact"
+    Test this in a lab first.
+
+    ```powershell
+    Remove-ADComputer -Identity "PC01"
+    ```
+
+---
+
+## Recommended Standard Layout (Command Pages)
+
+!!! note "Purpose"
+    Explains what the command does.
+
+!!! info "Permissions"
+    Required roles or access level.
+
+!!! warning "Production Impact"
+    What happens if run in production.
+
+!!! tip "GCC High"
+    Use `-Environment USGov` when applicable.
+
+---
+
+## Common Mistakes (Will Break Rendering)
+
+- Content not indented
+- Tabs instead of spaces
+- Text on same line as `!!!`
+- Missing blank line before block
+
+---
+
+## Quick Cheat Sheet
+
+!!! note
+    Info
+
+!!! warning "Custom Title"
+    Caution
+
+??? tip "Expandable"
+    Hidden details

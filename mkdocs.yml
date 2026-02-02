@@ -1,0 +1,35 @@
+site_name: Konner's Command Repository
+
+theme:
+  name: material
+  palette:
+    scheme: default
+    primary: green
+    accent: cyan
+  features:
+    - content.code.copy
+    - content.tabs.link
+    - navigation.instant
+    - navigation.sections
+    - navigation.expand
+    - search.highlight
+    - search.suggest
+
+nav:
+  - Home: index.md
+  - File Commands: File_Commands.md
+  - Registry Edits: Registry.md
+  - Software Installers: Software Installers.md
+  - Anaconda & Python: Python-Anaconda.md
+  - Azure: Azure.md
+  - PS-Exec Helper: PSEXEC.md
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.highlight

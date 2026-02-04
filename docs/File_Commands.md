@@ -1,17 +1,35 @@
 # File Commands
-## Permission Issues
-### Unblock Files
-To unblock a singular file
-```powershell
-unblock-file "PATH_TO_FILE"
-```
-To unblock all files recursively starting at initially provided path/folder
-```powershell
-Get-childitem "PATH_TO_FOLDER" | unblock-file
-```
-________________________
-### Digital Sig. Check
 
+Common file and permission troubleshooting commands.
+
+---
+
+## Quick Reference
+- [Permission Issues](#permission-issues)
+  - [Unblock files](#unblock-files)
+  - [Digital signature status](#digital-sig-check)
+  - [Zone-ID / MOTW](#zone-idmotw)
+
+---
+
+## Permission Issues
+
+### Unblock Files
+To unblock a single file:
+
+```powershell
+Unblock-File "PATH_TO_FILE"
+```
+
+To unblock all files recursively starting at the provided path/folder:
+
+```powershell
+Get-ChildItem "PATH_TO_FOLDER" | Unblock-File
+```
+
+---
+
+### Digital Sig. Check
 Checks whether a file is digitally signed.
 
 ```powershell
@@ -19,19 +37,23 @@ Checks whether a file is digitally signed.
 ```
 
 !!! note
-    Will return **"True"** if signed and **"False"** if signature is missing
+    Common values are **Valid** (signed) and **NotSigned** (signature missing).
 
-________________________
-### Zone-ID/MOTW:
-This will return the source of the file:
+---
 
-~~~powershell
+### Zone-ID/MOTW
+Returns the source zone for the file (Mark of the Web).
+
+```powershell
 Get-Content -Path "PATH_TO_FILE" -Stream Zone.Identifier
-~~~
+```
 
-??? note "Click Here for Zone-ID Mappings"
-    **1** = Local Intranet |
-    **2** = Trusted Sites |
-    **3** = Internet |
-    **4** = Restricted
-________________________
+??? note "Zone-ID mappings"
+    | Zone ID | Source |
+    | --- | --- |
+    | 1 | Local Intranet |
+    | 2 | Trusted Sites |
+    | 3 | Internet |
+    | 4 | Restricted |
+
+---

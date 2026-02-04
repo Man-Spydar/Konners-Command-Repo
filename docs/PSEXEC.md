@@ -34,6 +34,76 @@ Build a PsExec command safely and quickly. This page **only** generates a comman
 ## Options
 
 <div class="psexec-grid">
+  <label class="psexec-option">
+    <input type="checkbox" id="accepteula">
+    <span class="option-text">Accept EULA</span>
+    <span class="option-flag">-accepteula</span>
+  </label>
+
+  <label class="psexec-option">
+    <input type="checkbox" id="nobanner">
+    <span class="option-text">Hide banner</span>
+    <span class="option-flag">-nobanner</span>
+  </label>
+
+  <label class="psexec-option">
+    <input type="checkbox" id="system">
+    <span class="option-text">Run as SYSTEM</span>
+    <span class="option-flag">-s</span>
+  </label>
+
+  <label class="psexec-option">
+    <input type="checkbox" id="elevated">
+    <span class="option-text">Elevated token</span>
+    <span class="option-flag">-h</span>
+  </label>
+
+  <label class="psexec-option">
+    <input type="checkbox" id="limited">
+    <span class="option-text">Limited token</span>
+    <span class="option-flag">-l</span>
+  </label>
+
+  <label class="psexec-option">
+    <input type="checkbox" id="interactive">
+    <span class="option-text">Interactive session</span>
+    <span class="option-flag">-i</span>
+  </label>
+
+  <label class="psexec-option">
+    <input type="checkbox" id="dontwait">
+    <span class="option-text">Don't wait</span>
+    <span class="option-flag">-d</span>
+  </label>
+
+  <label class="psexec-option">
+    <input type="checkbox" id="copy">
+    <span class="option-text">Copy executable</span>
+    <span class="option-flag">-c</span>
+  </label>
+
+  <label class="psexec-option">
+    <input type="checkbox" id="forcecopy">
+    <span class="option-text">Force copy</span>
+    <span class="option-flag">-f</span>
+  </label>
+
+  <label class="psexec-option">
+    <input type="checkbox" id="verifycopy">
+    <span class="option-text">Verify copy</span>
+    <span class="option-flag">-v</span>
+  </label>
+
+  <label class="psexec-option">
+    <input type="checkbox" id="noprofile">
+    <span class="option-text">No profile</span>
+    <span class="option-flag">-e</span>
+  </label>
+
+  <label class="psexec-option">
+    <input type="checkbox" id="noconsole">
+    <span class="option-text">No console</span>
+    <span class="option-flag">-x</span>
   <label>
     <input type="checkbox" id="accepteula">
     Accept EULA (-accepteula)
@@ -298,6 +368,43 @@ function build() {
   const args = getValue(controls.arguments);
   if (args) parts.push(args.replace(/\r?\n/g, " "));
 
+
+  if (controls.dontwait.checked) parts.push("-d");
+  if (controls.copy.checked) parts.push("-c");
+  if (controls.forcecopy.checked && controls.copy.checked) parts.push("-f");
+  if (controls.verifycopy.checked && controls.copy.checked) parts.push("-v");
+  if (controls.noprofile.checked) parts.push("-e");
+  if (controls.noconsole.checked) parts.push("-x");
+
+  const timeout = getValue(controls.timeout);
+  if (timeout) parts.push(`-n ${timeout}`);
+
+  const processors = getValue(controls.processors);
+  if (processors) parts.push(`-a ${processors}`);
+
+  const username = getValue(controls.username);
+  if (username) parts.push(`-u ${formatToken(username)}`);
+
+  const password = getValue(controls.password);
+  if (password) parts.push(`-p ${formatToken(password)}`);
+
+  const workingDir = getValue(controls.workingDir);
+  if (workingDir) parts.push(`-w ${formatToken(workingDir)}`);
+
+  const service = getValue(controls.service);
+  if (service) parts.push(`-r ${formatToken(service)}`);
+
+  if (controls.priority.value) parts.push(`-priority ${controls.priority.value}`);
+
+  const computer = getValue(controls.computer) || "<computer>";
+  parts.push(computer.startsWith("\\\\") ? computer : `\\\\${computer}`);
+
+  const command = getValue(controls.command) || "cmd.exe";
+  parts.push(formatToken(command));
+
+  const args = getValue(controls.arguments);
+  if (args) parts.push(args.replace(/\r?\n/g, " "));
+
   controls.preview.value = parts.filter(Boolean).join(" ");
 }
 
@@ -360,6 +467,34 @@ build();
   flex-direction: column;
   font-size: 0.9rem;
   gap: 0.35rem;
+}
+
+.psexec-option {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--md-default-fg-color--lightest, #e0e0e0);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--md-default-bg-color, #fff);
+}
+
+.psexec-option input {
+  margin: 0;
+}
+
+.psexec-option .option-text {
+  font-weight: 600;
+}
+
+.psexec-option .option-flag {
+  margin-left: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 0.85rem;
+  color: var(--md-default-fg-color--light, #6b6b6b);
+  background: var(--md-default-bg-color--lighter, #f6f6f6);
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.35rem;
 }
 
 .psexec-actions {

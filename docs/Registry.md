@@ -1,17 +1,29 @@
 # Registry Edits and Fixes
 
+Registry tweaks for common user-facing issues.
+
+---
+
+## Quick Reference
+- [Theme / Appearance](#theme--appearance)
+  - [Dark mode fix](#dark-mode-fix)
+
+---
+
+## Theme / Appearance
+
 ### Dark Mode Fix
-When switching to dark mode and certain UI menus are still lightmode, the following commands can be used to fully transition to dark mode.
+When switching to dark mode and certain UI menus are still light mode, use the following commands to fully transition to dark mode.
 
 !!! note
-    A full sign-out is require for changes to take effect
+    A full sign-out is required for changes to take effect.
 
-~~~powershell
+```powershell
 Set-ItemProperty HKCU:\Software\Microsoft\Windows\CurrentVersion\ThemeManager DllName "%SystemRoot%\Resources\Themes\Aero\Aero.msstyles" -Type ExpandString
 Set-ItemProperty HKCU:\Software\Microsoft\Windows\CurrentVersion\ThemeManager "PrePolicy-DllName" "C:\Windows\Resources\Themes\Aero\Aero.msstyles"
-~~~
+```
 
 !!! warning
-    **This must be ran from the users profile**, otherwise you can navigate to their hive (if loaded) and supply the same values.
+    This must be run from the user's profile. Otherwise, load their hive and supply the same values there.
 
 ---

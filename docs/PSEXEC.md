@@ -4,6 +4,17 @@ Build a PsExec command safely and quickly. This page **only** generates a comman
 
 ---
 
+## Generated Command
+
+<textarea id="preview" rows="3" readonly></textarea>
+
+<div class="psexec-actions">
+  <button class="md-button md-button--primary" onclick="copyCommand()">Copy to Clipboard</button>
+  <span id="copyStatus" class="psexec-status" aria-live="polite"></span>
+</div>
+
+---
+
 ## Quick Build
 
 <div class="psexec-grid">
@@ -104,64 +115,6 @@ Build a PsExec command safely and quickly. This page **only** generates a comman
     <input type="checkbox" id="noconsole">
     <span class="option-text">No console</span>
     <span class="option-flag">-x</span>
-  <label>
-    <input type="checkbox" id="accepteula">
-    Accept EULA (-accepteula)
-  </label>
-
-  <label>
-    <input type="checkbox" id="nobanner">
-    Hide banner (-nobanner)
-  </label>
-
-  <label>
-    <input type="checkbox" id="system">
-    Run as SYSTEM (-s)
-  </label>
-
-  <label>
-    <input type="checkbox" id="elevated">
-    Elevated token (-h)
-  </label>
-
-  <label>
-    <input type="checkbox" id="limited">
-    Limited token (-l)
-  </label>
-
-  <label>
-    <input type="checkbox" id="interactive">
-    Interactive session (-i)
-  </label>
-
-  <label>
-    <input type="checkbox" id="dontwait">
-    Don't wait (-d)
-  </label>
-
-  <label>
-    <input type="checkbox" id="copy">
-    Copy executable (-c)
-  </label>
-
-  <label>
-    <input type="checkbox" id="forcecopy">
-    Force copy (-f)
-  </label>
-
-  <label>
-    <input type="checkbox" id="verifycopy">
-    Verify copy (-v)
-  </label>
-
-  <label>
-    <input type="checkbox" id="noprofile">
-    No profile (-e)
-  </label>
-
-  <label>
-    <input type="checkbox" id="noconsole">
-    No console (-x)
   </label>
 </div>
 
@@ -228,17 +181,6 @@ Build a PsExec command safely and quickly. This page **only** generates a comman
 
   </div>
 </details>
-
----
-
-## Generated Command
-
-<textarea id="preview" rows="3" readonly></textarea>
-
-<div class="psexec-actions">
-  <button class="md-button md-button--primary" onclick="copyCommand()">Copy to Clipboard</button>
-  <span id="copyStatus" class="psexec-status" aria-live="polite"></span>
-</div>
 
 ---
 
@@ -331,43 +273,6 @@ function build() {
   if (interactive || session) {
     parts.push(session ? `-i ${session}` : "-i");
   }
-
-  if (controls.dontwait.checked) parts.push("-d");
-  if (controls.copy.checked) parts.push("-c");
-  if (controls.forcecopy.checked && controls.copy.checked) parts.push("-f");
-  if (controls.verifycopy.checked && controls.copy.checked) parts.push("-v");
-  if (controls.noprofile.checked) parts.push("-e");
-  if (controls.noconsole.checked) parts.push("-x");
-
-  const timeout = getValue(controls.timeout);
-  if (timeout) parts.push(`-n ${timeout}`);
-
-  const processors = getValue(controls.processors);
-  if (processors) parts.push(`-a ${processors}`);
-
-  const username = getValue(controls.username);
-  if (username) parts.push(`-u ${formatToken(username)}`);
-
-  const password = getValue(controls.password);
-  if (password) parts.push(`-p ${formatToken(password)}`);
-
-  const workingDir = getValue(controls.workingDir);
-  if (workingDir) parts.push(`-w ${formatToken(workingDir)}`);
-
-  const service = getValue(controls.service);
-  if (service) parts.push(`-r ${formatToken(service)}`);
-
-  if (controls.priority.value) parts.push(`-priority ${controls.priority.value}`);
-
-  const computer = getValue(controls.computer) || "<computer>";
-  parts.push(computer.startsWith("\\\\") ? computer : `\\\\${computer}`);
-
-  const command = getValue(controls.command) || "cmd.exe";
-  parts.push(formatToken(command));
-
-  const args = getValue(controls.arguments);
-  if (args) parts.push(args.replace(/\r?\n/g, " "));
-
 
   if (controls.dontwait.checked) parts.push("-d");
   if (controls.copy.checked) parts.push("-c");

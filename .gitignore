@@ -1,0 +1,4 @@
+# Ensure generated site pages are tracked even if a global ignore exists.
+!site/
+!site/*.html
+!site/search/search_index.json

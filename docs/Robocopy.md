@@ -4,6 +4,23 @@ Build a Robocopy command safely and quickly. This page only generates a command 
 
 ---
 
+## Validation
+
+<div id="validation" class="validation"></div>
+
+---
+
+## Generated Command
+
+<textarea id="preview" rows="4" readonly></textarea>
+
+<div class="robocopy-actions">
+  <button class="md-button md-button--primary" onclick="copyCommand()">Copy to Clipboard</button>
+  <span id="copyStatus" class="robocopy-status" aria-live="polite"></span>
+</div>
+
+---
+
 ## Quick Build
 
 <div class="robocopy-grid">
@@ -136,23 +153,6 @@ Build a Robocopy command safely and quickly. This page only generates a command 
     </label>
   </div>
 </details>
-
----
-
-## Validation
-
-<div id="validation" class="validation"></div>
-
----
-
-## Generated Command
-
-<textarea id="preview" rows="4" readonly></textarea>
-
-<div class="robocopy-actions">
-  <button class="md-button md-button--primary" onclick="copyCommand()">Copy to Clipboard</button>
-  <span id="copyStatus" class="robocopy-status" aria-live="polite"></span>
-</div>
 
 ---
 

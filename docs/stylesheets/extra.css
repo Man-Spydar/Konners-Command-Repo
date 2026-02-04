@@ -1,0 +1,54 @@
+/* ============================= */
+/* HEADER & LOGO SCALING         */
+/* ============================= */
+
+/* Increase logo size */
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 44px;
+  width: auto;
+}
+
+/* Darken header background for contrast */
+.md-header {
+  background-color: #1a1d23;
+}
+
+/* Slight spacing so logo breathes */
+.md-header__button.md-logo {
+  margin-right: 0.5rem;
+}
+
+/* Subtle hover feedback */
+.md-header__button.md-logo:hover {
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.15));
+}
+
+/* ============================= */
+/* GLOBAL COLOR TUNING           */
+/* ============================= */
+
+/* Page background */
+.md-main {
+  background-color: #0f1115;
+}
+
+/* Body text */
+.md-typeset {
+  color: #e6e8eb;
+}
+
+/* Muted text */
+.md-typeset .md-muted {
+  color: #9aa0a6;
+}
+
+/* Links */
+.md-typeset a {
+  color: #c94a4a;
+}
+
+/* Hover links */
+.md-typeset a:hover {
+  color: #ff6b6b;
+}

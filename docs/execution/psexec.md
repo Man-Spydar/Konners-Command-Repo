@@ -228,56 +228,57 @@ function getValue(input) {
 }
 
 function resetAll() {
-  document.querySelectorAll("#advanced input, #advanced select").forEach(el => {
-    if (el.tagName === "SELECT") {
-      el.value = "";
+  document.querySelectorAll("input").forEach(el => {
+    if (el.type === "checkbox") {
+      el.checked = false;
     } else {
       el.value = "";
     }
   });
-
-  document.querySelectorAll("input[type=checkbox]").forEach(c => {
-    c.checked = false;
-  });
-
   controls.command.value = "cmd.exe";
-  controls.arguments.value = "";
-  syncCopyOptions();
-  build();
+  updatePreview();
+  updateCopyStatus("");
 }
 
-function syncCopyOptions() {
-  const enabled = controls.copy.checked;
-  controls.forcecopy.disabled = !enabled;
-  controls.verifycopy.disabled = !enabled;
-  if (!enabled) {
-    controls.forcecopy.checked = false;
-    controls.verifycopy.checked = false;
-  }
+function presetSystemCmd() {
+  controls.command.value = "cmd.exe";
+  controls.arguments.value = "/k whoami";
+  controls.system.checked = true;
+  controls.interactive.checked = true;
+  updatePreview();
 }
 
-function build() {
+function presetBasicCmd() {
+  controls.command.value = "cmd.exe";
+  controls.arguments.value = "/c whoami";
+  controls.system.checked = false;
+  controls.interactive.checked = false;
+  updatePreview();
+}
+
+function updateCopyStatus(message) {
+  controls.copyStatus.textContent = message;
+}
+
+function buildCommand() {
   const parts = [];
   const path = getValue(controls.psexecPath) || "PsExec.exe";
 
-  parts.push(formatToken(path));
+  parts.push(path);
 
   if (controls.accepteula.checked) parts.push("-accepteula");
   if (controls.nobanner.checked) parts.push("-nobanner");
   if (controls.system.checked) parts.push("-s");
   if (controls.elevated.checked) parts.push("-h");
   if (controls.limited.checked) parts.push("-l");
-
-  const interactive = controls.interactive.checked;
-  const session = getValue(controls.session);
-  if (interactive || session) {
+  if (controls.interactive.checked) {
+    const session = getValue(controls.session);
     parts.push(session ? `-i ${session}` : "-i");
   }
-
   if (controls.dontwait.checked) parts.push("-d");
   if (controls.copy.checked) parts.push("-c");
-  if (controls.forcecopy.checked && controls.copy.checked) parts.push("-f");
-  if (controls.verifycopy.checked && controls.copy.checked) parts.push("-v");
+  if (controls.forcecopy.checked) parts.push("-f");
+  if (controls.verifycopy.checked) parts.push("-v");
   if (controls.noprofile.checked) parts.push("-e");
   if (controls.noconsole.checked) parts.push("-x");
 
@@ -299,132 +300,39 @@ function build() {
   const service = getValue(controls.service);
   if (service) parts.push(`-r ${formatToken(service)}`);
 
-  if (controls.priority.value) parts.push(`-priority ${controls.priority.value}`);
+  const priority = getValue(controls.priority);
+  if (priority) parts.push(`-priority ${priority}`);
 
-  const computer = getValue(controls.computer) || "<computer>";
-  parts.push(computer.startsWith("\\\\") ? computer : `\\\\${computer}`);
+  const computer = getValue(controls.computer) || "COMPUTER01";
+  parts.push(`\\\\${computer}`);
 
   const command = getValue(controls.command) || "cmd.exe";
   parts.push(formatToken(command));
 
-  const args = getValue(controls.arguments);
-  if (args) parts.push(args.replace(/\r?\n/g, " "));
+  const argumentsValue = getValue(controls.arguments);
+  if (argumentsValue) parts.push(argumentsValue);
 
-  controls.preview.value = parts.filter(Boolean).join(" ");
+  return parts.filter(Boolean).join(" ");
 }
 
-function presetSystemCmd() {
-  resetAll();
-  controls.accepteula.checked = true;
-  controls.system.checked = true;
-  controls.interactive.checked = true;
-  build();
+function updatePreview() {
+  controls.preview.value = buildCommand();
 }
 
-function presetBasicCmd() {
-  resetAll();
-  controls.accepteula.checked = true;
-  build();
-}
-
-async function copyCommand() {
-  const command = controls.preview.value;
-  if (!command) return;
-
-  try {
-    await navigator.clipboard.writeText(command);
-    controls.copyStatus.textContent = "Copied!";
-  } catch (error) {
-    controls.preview.select();
-    document.execCommand("copy");
-    controls.copyStatus.textContent = "Copied (fallback).";
-  }
-
-  setTimeout(() => {
-    controls.copyStatus.textContent = "";
-  }, 2000);
-}
-
-document.querySelectorAll("input, select").forEach(el => {
-  el.addEventListener("input", () => {
-    if (el === controls.copy) syncCopyOptions();
-    build();
+function copyCommand() {
+  const command = buildCommand();
+  navigator.clipboard.writeText(command).then(() => {
+    updateCopyStatus("Copied!");
+  }).catch(() => {
+    updateCopyStatus("Unable to copy");
   });
-  el.addEventListener("change", () => {
-    if (el === controls.copy) syncCopyOptions();
-    build();
-  });
+}
+
+Object.values(controls).forEach(control => {
+  if (!control) return;
+  const event = control.tagName === "SELECT" || control.type === "checkbox" ? "change" : "input";
+  control.addEventListener(event, updatePreview);
 });
 
-syncCopyOptions();
-build();
+resetAll();
 </script>
-
-<style>
-.psexec-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 0.75rem;
-}
-
-.psexec-grid label {
-  display: flex;
-  flex-direction: column;
-  font-size: 0.9rem;
-  gap: 0.35rem;
-}
-
-.psexec-option {
-  flex-direction: row;
-  align-items: center;
-  gap: 0.5rem;
-  border: 1px solid var(--md-default-fg-color--lightest, #e0e0e0);
-  border-radius: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  background: var(--md-default-bg-color, #fff);
-}
-
-.psexec-option input {
-  margin: 0;
-}
-
-.psexec-option .option-text {
-  font-weight: 600;
-}
-
-.psexec-option .option-flag {
-  margin-left: auto;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-  font-size: 0.85rem;
-  color: var(--md-default-fg-color--light, #6b6b6b);
-  background: var(--md-default-bg-color--lighter, #f6f6f6);
-  padding: 0.15rem 0.4rem;
-  border-radius: 0.35rem;
-}
-
-.psexec-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-.important input {
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-#preview {
-  width: 100%;
-  font-family: ui-monospace, SFMono-Regular, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-}
-
-.psexec-advanced {
-  margin-top: 0.75rem;
-}
-
-.psexec-status {
-  font-size: 0.85rem;
-  color: var(--md-default-fg-color--light, #6b6b6b);
-}
-</style>

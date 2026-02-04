@@ -1,6 +1,6 @@
 use_directory_urls: false
 
-site_name: Service Desk Command Repository
+site_name: Konner's Full Code - Repository
 site_description: Konner’s Full Code Repository
 
 theme:
@@ -9,7 +9,7 @@ theme:
   favicon: assets/favicon.svg
   palette:
     scheme: slate
-    primary: "#ECEFF4"
+    primary: "#F4EDEC"
     accent: "#C94A4A"
   features:
     - content.code.copy

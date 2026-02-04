@@ -1,4 +1,4 @@
-# Registry Edits and Fixes
+# Registry
 
 Registry tweaks for common user-facing issues.
 

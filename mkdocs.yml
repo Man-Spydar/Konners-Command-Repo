@@ -22,13 +22,48 @@ theme:
 
 nav:
   - Home: index.md
-  - File Commands: File_Commands.md
-  - Registry Edits: Registry.md
-  - Software Installers: Software Installers.md
-  - Anaconda & Python: Python-Anaconda.md
-  - Azure: Azure.md
-  - PS-Exec Helper: PSEXEC.md
-  - RoboCopy Helper: Robocopy.md
+  - Files & Permissions:
+      - Overview: files/index.md
+      - Unblocking & Zone-ID: files/unblocking.md
+      - Permissions & Ownership: files/permissions.md
+      - Digital Signatures: files/signatures.md
+
+  - Process & Execution:
+      - Overview: execution/index.md
+      - PsExec: execution/psexec.md
+      - RunAs / Elevation: execution/elevation.md
+
+  - Software & Packages:
+      - Overview: software/index.md
+      - Appx / AppxPackage: software/appx.md
+      - MSI & EXE Installs: software/installers.md
+      - Office / Click-to-Run: software/office.md
+
+  - Imaging & Deployment:
+      - Overview: imaging/index.md
+      - MDT Commands: imaging/mdt.md
+      - Logs & Troubleshooting: imaging/logs.md
+      - Replication & Robocopy: imaging/robocopy.md
+
+  - Python & Automation:
+      - Overview: python/index.md
+      - Conda Environments: python/conda.md
+      - pip Usage: python/pip.md
+
+  - Networking:
+      - Overview: networking/index.md
+      - DNS & IP Tools: networking/dns.md
+      - Connectivity Tests: networking/connectivity.md
+
+  - Windows Internals:
+      - Overview: windows/index.md
+      - Registry: windows/registry.md
+      - Services & Tasks: windows/services.md
+
+  - Reference:
+      - Overview: reference/index.md
+      - Exit Codes & Flags: reference/flags.md
+      - Common Paths: reference/paths.md
 
 markdown_extensions:
   - admonition

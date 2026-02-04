@@ -196,64 +196,65 @@ function getValue(input) {
 }
 
 function resetAll() {
-  document.querySelectorAll("#advanced input").forEach(el => {
-    el.value = "";
+  document.querySelectorAll("input").forEach(el => {
+    if (el.type === "checkbox") {
+      el.checked = false;
+    } else {
+      el.value = "";
+    }
   });
-
-  document.querySelectorAll("input[type=checkbox]").forEach(c => {
-    c.checked = false;
-  });
-
-  syncMirrorOptions();
-  updateCommand();
+  updatePreview();
+  updateCopyStatus("");
+  controls.validation.textContent = "";
 }
 
-function syncMirrorOptions() {
-  const enabled = controls.mirror.checked;
-  controls.purge.disabled = enabled;
-  controls.subdirs.disabled = enabled;
-
-  if (enabled) {
-    controls.purge.checked = true;
-    controls.subdirs.checked = true;
-  }
+function presetMirror() {
+  controls.mirror.checked = true;
+  controls.purge.checked = true;
+  updatePreview();
 }
 
-function validate() {
-  const warnings = [];
-
-  if (!getValue(controls.source)) warnings.push("Source path is required.");
-  if (!getValue(controls.destination)) warnings.push("Destination path is required.");
-
-  if (controls.mirror.checked) {
-    warnings.push("Mirror includes /E and /PURGE. Use with caution.");
-  }
-
-  if (controls.threads.value && Number(controls.threads.value) > 64) {
-    warnings.push("High thread counts can cause network or disk saturation.");
-  }
-
-  controls.validation.innerHTML = warnings.length
-    ? `<ul><li>${warnings.join("</li><li>")}</li></ul>`
-    : "<span class='ok'>No issues detected.</span>";
+function presetBackup() {
+  controls.subdirs.checked = true;
+  controls.restartable.checked = true;
+  controls.backupmode.checked = true;
+  updatePreview();
 }
 
-function updateCommand() {
-  const parts = ["robocopy"];
+function presetLogOnly() {
+  controls.listonly.checked = true;
+  controls.logfile.checked = true;
+  updatePreview();
+}
 
-  parts.push(formatToken(getValue(controls.source)) || "<source>");
-  parts.push(formatToken(getValue(controls.destination)) || "<destination>");
+function updateCopyStatus(message) {
+  controls.copyStatus.textContent = message;
+}
 
-  if (controls.mirror.checked) parts.push("/MIR");
-  if (!controls.mirror.checked && controls.purge.checked) parts.push("/PURGE");
-  if (!controls.mirror.checked && controls.subdirs.checked) parts.push("/E");
-  if (controls.restartable.checked) parts.push("/Z");
-  if (controls.backupmode.checked) parts.push("/B");
-  if (controls.security.checked) parts.push("/COPYALL");
-  if (controls.timestamps.checked) parts.push("/DCOPY:T");
-  if (controls.listonly.checked) parts.push("/L");
-  if (controls.nflndl.checked) parts.push("/NFL /NDL");
-  if (controls.excludejunctions.checked) parts.push("/XJ");
+function addFlag(parts, flag, condition) {
+  if (condition) parts.push(flag);
+}
+
+function buildCommand() {
+  const source = getValue(controls.source);
+  const destination = getValue(controls.destination);
+
+  if (!source || !destination) {
+    return "";
+  }
+
+  const parts = ["robocopy", formatToken(source), formatToken(destination)];
+
+  addFlag(parts, "/MIR", controls.mirror.checked);
+  addFlag(parts, "/PURGE", controls.purge.checked);
+  addFlag(parts, "/E", controls.subdirs.checked);
+  addFlag(parts, "/Z", controls.restartable.checked);
+  addFlag(parts, "/B", controls.backupmode.checked);
+  addFlag(parts, "/COPYALL", controls.security.checked);
+  addFlag(parts, "/DCOPY:T", controls.timestamps.checked);
+  addFlag(parts, "/L", controls.listonly.checked);
+  addFlag(parts, "/NFL", controls.nflndl.checked);
+  addFlag(parts, "/NDL", controls.nflndl.checked);
 
   const retries = getValue(controls.retries);
   if (retries) parts.push(`/R:${retries}`);
@@ -264,168 +265,62 @@ function updateCommand() {
   const threads = getValue(controls.threads);
   if (threads) parts.push(`/MT:${threads}`);
 
-  const excludeFiles = getValue(controls.excludefiles);
-  if (excludeFiles) parts.push(`/XF ${excludeFiles}`);
+  const excludefiles = getValue(controls.excludefiles);
+  if (excludefiles) parts.push(`/XF ${excludefiles}`);
 
-  const excludeDirs = getValue(controls.excludedirs);
-  if (excludeDirs) parts.push(`/XD ${excludeDirs}`);
+  const excludedirs = getValue(controls.excludedirs);
+  if (excludedirs) parts.push(`/XD ${excludedirs}`);
 
   if (controls.logfile.checked) {
-    const logPath = getValue(controls.logpath) || "%WINDIR%\\Temp\\robocopy.log";
-    parts.push(`/LOG:${logPath}`);
+    const logpath = getValue(controls.logpath) || "%WINDIR%\\Temp\\robocopy.log";
+    parts.push(`/LOG:${logpath}`);
   }
 
-  controls.preview.value = parts.filter(Boolean).join(" ");
-  validate();
+  addFlag(parts, "/XJ", controls.excludejunctions.checked);
+
+  return parts.join(" ");
 }
 
-function presetMirror() {
-  resetAll();
-  controls.mirror.checked = true;
-  controls.restartable.checked = true;
-  controls.retries.value = 3;
-  controls.wait.value = 5;
-  controls.threads.value = 16;
-  controls.logfile.checked = true;
-  syncMirrorOptions();
-  updateCommand();
-}
+function validateInputs() {
+  const source = getValue(controls.source);
+  const destination = getValue(controls.destination);
 
-function presetBackup() {
-  resetAll();
-  controls.subdirs.checked = true;
-  controls.restartable.checked = true;
-  controls.backupmode.checked = true;
-  controls.security.checked = true;
-  controls.timestamps.checked = true;
-  controls.retries.value = 3;
-  controls.wait.value = 5;
-  controls.logfile.checked = true;
-  syncMirrorOptions();
-  updateCommand();
-}
-
-function presetLogOnly() {
-  resetAll();
-  controls.listonly.checked = true;
-  controls.logfile.checked = true;
-  syncMirrorOptions();
-  updateCommand();
-}
-
-async function copyCommand() {
-  const command = controls.preview.value;
-  if (!command) return;
-
-  try {
-    await navigator.clipboard.writeText(command);
-    controls.copyStatus.textContent = "Copied!";
-  } catch (error) {
-    controls.preview.select();
-    document.execCommand("copy");
-    controls.copyStatus.textContent = "Copied (fallback).";
+  if (!source || !destination) {
+    controls.validation.textContent = "Enter both source and destination paths.";
+    return false;
   }
 
-  setTimeout(() => {
-    controls.copyStatus.textContent = "";
-  }, 2000);
+  controls.validation.textContent = "";
+  return true;
 }
 
-document.querySelectorAll("input").forEach(el => {
-  el.addEventListener("input", () => {
-    if (el === controls.mirror) syncMirrorOptions();
-    updateCommand();
+function updatePreview() {
+  if (!validateInputs()) {
+    controls.preview.value = "";
+    return;
+  }
+
+  controls.preview.value = buildCommand();
+}
+
+function copyCommand() {
+  const command = buildCommand();
+  if (!command) {
+    updateCopyStatus("Enter paths first.");
+    return;
+  }
+  navigator.clipboard.writeText(command).then(() => {
+    updateCopyStatus("Copied!");
+  }).catch(() => {
+    updateCopyStatus("Unable to copy");
   });
-  el.addEventListener("change", () => {
-    if (el === controls.mirror) syncMirrorOptions();
-    updateCommand();
-  });
+}
+
+Object.values(controls).forEach(control => {
+  if (!control) return;
+  const event = control.tagName === "SELECT" || control.type === "checkbox" ? "change" : "input";
+  control.addEventListener(event, updatePreview);
 });
 
-syncMirrorOptions();
-updateCommand();
+resetAll();
 </script>
-
-<style>
-.robocopy-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 0.75rem;
-}
-
-.robocopy-grid label {
-  display: flex;
-  flex-direction: column;
-  font-size: 0.9rem;
-  gap: 0.35rem;
-}
-
-.robocopy-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-.robocopy-option {
-  flex-direction: row;
-  align-items: center;
-  gap: 0.5rem;
-  border: 1px solid var(--md-default-fg-color--lightest, #e0e0e0);
-  border-radius: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  background: var(--md-default-bg-color, #fff);
-}
-
-.robocopy-option--inline {
-  margin-top: 0.5rem;
-}
-
-.robocopy-option input {
-  margin: 0;
-}
-
-.robocopy-option .option-text {
-  font-weight: 600;
-}
-
-.robocopy-option .option-flag {
-  margin-left: auto;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-  font-size: 0.85rem;
-  color: var(--md-default-fg-color--light, #6b6b6b);
-  background: var(--md-default-bg-color--lighter, #f6f6f6);
-  padding: 0.15rem 0.4rem;
-  border-radius: 0.35rem;
-}
-
-.robocopy-advanced {
-  margin-top: 0.75rem;
-}
-
-.important input {
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-#preview {
-  width: 100%;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-}
-
-.validation {
-  background: var(--md-default-bg-color--lighter);
-  border-left: 4px solid #ffa000;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.85rem;
-}
-
-.validation .ok {
-  color: #2e7d32;
-}
-
-.robocopy-status {
-  font-size: 0.85rem;
-  color: var(--md-default-fg-color--light, #6b6b6b);
-}
-</style>

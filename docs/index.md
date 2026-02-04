@@ -6,33 +6,14 @@ Quick-access command references and tooling used across Service Desk and infrast
 
 ## Browse by Category
 
-<div class="grid cards" markdown>
-
-- **File Commands**  
-  Common file, permission, and system operations.  
-  [Open →](File_Commands.md)
-
-- **Registry Edits**  
-  Frequently used registry keys and modifications.  
-  [Open →](Registry.md)
-
-- **Software Installers**  
-  Silent installs, validation, and repair commands.  
-  [Open →](Software%20Installers.md)
-
-- **Anaconda & Python**  
-  Environment management and package tooling.  
-  [Open →](Python-Anaconda.md)
-
-- **Azure**  
-  Cloud administration and PowerShell modules.  
-  [Open →](Azure.md)
-
-- **PSExec Helper**  
-  Remote execution examples and helpers.  
-  [Open →](PSEXEC.md)
-
-</div>
+- [Files & Permissions](files/index.md)
+- [Process & Execution](execution/index.md)
+- [Software & Packages](software/index.md)
+- [Imaging & Deployment](imaging/index.md)
+- [Python & Automation](python/index.md)
+- [Networking](networking/index.md)
+- [Windows Internals](windows/index.md)
+- [Reference](reference/flags.md)
 
 ---
 

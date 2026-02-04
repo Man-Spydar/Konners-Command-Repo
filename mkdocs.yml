@@ -1,6 +1,6 @@
 use_directory_urls: false
 
-site_name: Konner's Full Code - Repository
+site_name: KFC Repository
 site_description: Konner’s Full Code Repository
 
 theme:
@@ -9,8 +9,8 @@ theme:
   favicon: assets/favicon.svg
   palette:
     scheme: slate
-    primary: "#F4EDEC"
-    accent: "#C94A4A"
+    primary: black
+    accent: red
   features:
     - content.code.copy
     - content.tabs.link
@@ -39,3 +39,6 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.details
   - pymdownx.highlight
+
+extra_css:
+  - stylesheets/extra.css

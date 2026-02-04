@@ -1,0 +1,1075 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Konner’s Full Code Repository">
+      
+      
+      
+      
+        <link rel="prev" href="Azure.html">
+      
+      
+        <link rel="next" href="Robocopy.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>PS-Exec Helper - KFC Repository</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/extra.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="red">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#psexec-command-builder" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="KFC Repository" class="md-header__button md-logo" aria-label="KFC Repository" data-md-component="logo">
+      
+  <img src="assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            KFC Repository
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PS-Exec Helper
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="KFC Repository" class="md-nav__button md-logo" aria-label="KFC Repository" data-md-component="logo">
+      
+  <img src="assets/logo.svg" alt="logo">
+
+    </a>
+    KFC Repository
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="File_Commands.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Registry.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Registry Edits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Software%20Installers.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Installers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Python-Anaconda.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anaconda & Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Azure.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Azure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PS-Exec Helper
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="PSEXEC.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PS-Exec Helper
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#generated-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generated Command
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Build
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Options
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced (Optional)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Robocopy.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RoboCopy Helper
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#generated-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generated Command
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Build
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Options
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced (Optional)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="psexec-command-builder">PsExec Command Builder</h1>
+<p>Build a PsExec command safely and quickly. This page <strong>only</strong> generates a command string — nothing is executed automatically.</p>
+<hr />
+<h2 id="generated-command">Generated Command</h2>
+<textarea id="preview" rows="3" readonly></textarea>
+
+<div class="psexec-actions">
+  <button class="md-button md-button--primary" onclick="copyCommand()">Copy to Clipboard</button>
+  <span id="copyStatus" class="psexec-status" aria-live="polite"></span>
+</div>
+
+<hr />
+<h2 id="quick-build">Quick Build</h2>
+<div class="psexec-grid">
+  <label class="important">
+    Target Computer
+    <input type="text" id="computer" placeholder="COMPUTER01">
+  </label>
+
+  <label>
+    Remote Command
+    <input type="text" id="command" value="cmd.exe">
+  </label>
+
+  <label>
+    Arguments
+    <input type="text" id="arguments" placeholder="/c whoami">
+  </label>
+</div>
+
+<div class="psexec-actions">
+  <button class="md-button md-button--primary" onclick="presetSystemCmd()">SYSTEM + Interactive CMD</button>
+  <button class="md-button" onclick="presetBasicCmd()">Basic CMD</button>
+  <button class="md-button" onclick="resetAll()">Reset</button>
+</div>
+
+<hr />
+<h2 id="options">Options</h2>
+<div class="psexec-grid">
+  <label class="psexec-option">
+    <input type="checkbox" id="accepteula">
+    <span class="option-text">Accept EULA</span>
+    <span class="option-flag">-accepteula</span>
+  </label>
+
+  <label class="psexec-option">
+    <input type="checkbox" id="nobanner">
+    <span class="option-text">Hide banner</span>
+    <span class="option-flag">-nobanner</span>
+  </label>
+
+  <label class="psexec-option">
+    <input type="checkbox" id="system">
+    <span class="option-text">Run as SYSTEM</span>
+    <span class="option-flag">-s</span>
+  </label>
+
+  <label class="psexec-option">
+    <input type="checkbox" id="elevated">
+    <span class="option-text">Elevated token</span>
+    <span class="option-flag">-h</span>
+  </label>
+
+  <label class="psexec-option">
+    <input type="checkbox" id="limited">
+    <span class="option-text">Limited token</span>
+    <span class="option-flag">-l</span>
+  </label>
+
+  <label class="psexec-option">
+    <input type="checkbox" id="interactive">
+    <span class="option-text">Interactive session</span>
+    <span class="option-flag">-i</span>
+  </label>
+
+  <label class="psexec-option">
+    <input type="checkbox" id="dontwait">
+    <span class="option-text">Don't wait</span>
+    <span class="option-flag">-d</span>
+  </label>
+
+  <label class="psexec-option">
+    <input type="checkbox" id="copy">
+    <span class="option-text">Copy executable</span>
+    <span class="option-flag">-c</span>
+  </label>
+
+  <label class="psexec-option">
+    <input type="checkbox" id="forcecopy">
+    <span class="option-text">Force copy</span>
+    <span class="option-flag">-f</span>
+  </label>
+
+  <label class="psexec-option">
+    <input type="checkbox" id="verifycopy">
+    <span class="option-text">Verify copy</span>
+    <span class="option-flag">-v</span>
+  </label>
+
+  <label class="psexec-option">
+    <input type="checkbox" id="noprofile">
+    <span class="option-text">No profile</span>
+    <span class="option-flag">-e</span>
+  </label>
+
+  <label class="psexec-option">
+    <input type="checkbox" id="noconsole">
+    <span class="option-text">No console</span>
+    <span class="option-flag">-x</span>
+  </label>
+</div>
+
+<hr />
+<h2 id="advanced-optional">Advanced (Optional)</h2>
+<details id="advanced">
+  <summary>Show advanced options</summary>
+
+  <div class="psexec-grid psexec-advanced">
+    <label>
+      PsExec path
+      <input type="text" id="psexecPath" placeholder="PsExec.exe">
+    </label>
+
+    <label>
+      Session ID (-i <session>)
+      <input type="text" id="session" placeholder="1">
+    </label>
+
+    <label>
+      Timeout (seconds) (-n)
+      <input type="number" id="timeout" placeholder="30" min="1">
+    </label>
+
+    <label>
+      Processors (-a)
+      <input type="text" id="processors" placeholder="0,2-3">
+    </label>
+
+    <label>
+      Username (-u)
+      <input type="text" id="username" placeholder="DOMAIN\\user">
+    </label>
+
+    <label>
+      Password (-p)
+      <input type="password" id="password" placeholder="••••••••">
+    </label>
+
+    <label>
+      Working directory (-w)
+      <input type="text" id="workingDir" placeholder="C:\\Temp">
+    </label>
+
+    <label>
+      Service name (-r)
+      <input type="text" id="service" placeholder="PSEXESVC">
+    </label>
+
+    <label>
+      Priority (-priority)
+      <select id="priority">
+        <option value="">Default</option>
+        <option value="low">Low</option>
+        <option value="belownormal">Below normal</option>
+        <option value="normal">Normal</option>
+        <option value="abovenormal">Above normal</option>
+        <option value="high">High</option>
+        <option value="realtime">Realtime</option>
+      </select>
+    </label>
+
+  </div>
+</details>
+
+<hr />
+<script>
+const controls = {
+  computer: document.getElementById("computer"),
+  command: document.getElementById("command"),
+  arguments: document.getElementById("arguments"),
+  accepteula: document.getElementById("accepteula"),
+  nobanner: document.getElementById("nobanner"),
+  system: document.getElementById("system"),
+  elevated: document.getElementById("elevated"),
+  limited: document.getElementById("limited"),
+  interactive: document.getElementById("interactive"),
+  dontwait: document.getElementById("dontwait"),
+  copy: document.getElementById("copy"),
+  forcecopy: document.getElementById("forcecopy"),
+  verifycopy: document.getElementById("verifycopy"),
+  noprofile: document.getElementById("noprofile"),
+  noconsole: document.getElementById("noconsole"),
+  psexecPath: document.getElementById("psexecPath"),
+  session: document.getElementById("session"),
+  timeout: document.getElementById("timeout"),
+  processors: document.getElementById("processors"),
+  username: document.getElementById("username"),
+  password: document.getElementById("password"),
+  workingDir: document.getElementById("workingDir"),
+  service: document.getElementById("service"),
+  priority: document.getElementById("priority"),
+  preview: document.getElementById("preview"),
+  copyStatus: document.getElementById("copyStatus"),
+};
+
+function formatToken(value) {
+  if (!value) return null;
+  const escaped = value.replace(/"/g, '""');
+  if (/[\s&|<>]/.test(escaped)) {
+    return `"${escaped}"`;
+  }
+  return escaped;
+}
+
+function getValue(input) {
+  return input ? input.value.trim() : "";
+}
+
+function resetAll() {
+  document.querySelectorAll("#advanced input, #advanced select").forEach(el => {
+    if (el.tagName === "SELECT") {
+      el.value = "";
+    } else {
+      el.value = "";
+    }
+  });
+
+  document.querySelectorAll("input[type=checkbox]").forEach(c => {
+    c.checked = false;
+  });
+
+  controls.command.value = "cmd.exe";
+  controls.arguments.value = "";
+  syncCopyOptions();
+  build();
+}
+
+function syncCopyOptions() {
+  const enabled = controls.copy.checked;
+  controls.forcecopy.disabled = !enabled;
+  controls.verifycopy.disabled = !enabled;
+  if (!enabled) {
+    controls.forcecopy.checked = false;
+    controls.verifycopy.checked = false;
+  }
+}
+
+function build() {
+  const parts = [];
+  const path = getValue(controls.psexecPath) || "PsExec.exe";
+
+  parts.push(formatToken(path));
+
+  if (controls.accepteula.checked) parts.push("-accepteula");
+  if (controls.nobanner.checked) parts.push("-nobanner");
+  if (controls.system.checked) parts.push("-s");
+  if (controls.elevated.checked) parts.push("-h");
+  if (controls.limited.checked) parts.push("-l");
+
+  const interactive = controls.interactive.checked;
+  const session = getValue(controls.session);
+  if (interactive || session) {
+    parts.push(session ? `-i ${session}` : "-i");
+  }
+
+  if (controls.dontwait.checked) parts.push("-d");
+  if (controls.copy.checked) parts.push("-c");
+  if (controls.forcecopy.checked && controls.copy.checked) parts.push("-f");
+  if (controls.verifycopy.checked && controls.copy.checked) parts.push("-v");
+  if (controls.noprofile.checked) parts.push("-e");
+  if (controls.noconsole.checked) parts.push("-x");
+
+  const timeout = getValue(controls.timeout);
+  if (timeout) parts.push(`-n ${timeout}`);
+
+  const processors = getValue(controls.processors);
+  if (processors) parts.push(`-a ${processors}`);
+
+  const username = getValue(controls.username);
+  if (username) parts.push(`-u ${formatToken(username)}`);
+
+  const password = getValue(controls.password);
+  if (password) parts.push(`-p ${formatToken(password)}`);
+
+  const workingDir = getValue(controls.workingDir);
+  if (workingDir) parts.push(`-w ${formatToken(workingDir)}`);
+
+  const service = getValue(controls.service);
+  if (service) parts.push(`-r ${formatToken(service)}`);
+
+  if (controls.priority.value) parts.push(`-priority ${controls.priority.value}`);
+
+  const computer = getValue(controls.computer) || "<computer>";
+  parts.push(computer.startsWith("\\\\") ? computer : `\\\\${computer}`);
+
+  const command = getValue(controls.command) || "cmd.exe";
+  parts.push(formatToken(command));
+
+  const args = getValue(controls.arguments);
+  if (args) parts.push(args.replace(/\r?\n/g, " "));
+
+  controls.preview.value = parts.filter(Boolean).join(" ");
+}
+
+function presetSystemCmd() {
+  resetAll();
+  controls.accepteula.checked = true;
+  controls.system.checked = true;
+  controls.interactive.checked = true;
+  build();
+}
+
+function presetBasicCmd() {
+  resetAll();
+  controls.accepteula.checked = true;
+  build();
+}
+
+async function copyCommand() {
+  const command = controls.preview.value;
+  if (!command) return;
+
+  try {
+    await navigator.clipboard.writeText(command);
+    controls.copyStatus.textContent = "Copied!";
+  } catch (error) {
+    controls.preview.select();
+    document.execCommand("copy");
+    controls.copyStatus.textContent = "Copied (fallback).";
+  }
+
+  setTimeout(() => {
+    controls.copyStatus.textContent = "";
+  }, 2000);
+}
+
+document.querySelectorAll("input, select").forEach(el => {
+  el.addEventListener("input", () => {
+    if (el === controls.copy) syncCopyOptions();
+    build();
+  });
+  el.addEventListener("change", () => {
+    if (el === controls.copy) syncCopyOptions();
+    build();
+  });
+});
+
+syncCopyOptions();
+build();
+</script>
+
+<style>
+.psexec-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.75rem;
+}
+
+.psexec-grid label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  gap: 0.35rem;
+}
+
+.psexec-option {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--md-default-fg-color--lightest, #e0e0e0);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--md-default-bg-color, #fff);
+}
+
+.psexec-option input {
+  margin: 0;
+}
+
+.psexec-option .option-text {
+  font-weight: 600;
+}
+
+.psexec-option .option-flag {
+  margin-left: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 0.85rem;
+  color: var(--md-default-fg-color--light, #6b6b6b);
+  background: var(--md-default-bg-color--lighter, #f6f6f6);
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.35rem;
+}
+
+.psexec-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.important input {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+#preview {
+  width: 100%;
+  font-family: ui-monospace, SFMono-Regular, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+.psexec-advanced {
+  margin-top: 0.75rem;
+}
+
+.psexec-status {
+  font-size: 0.85rem;
+  color: var(--md-default-fg-color--light, #6b6b6b);
+}
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["content.code.copy", "content.tabs.link", "navigation.instant", "navigation.sections", "navigation.expand", "search.highlight", "search.suggest"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

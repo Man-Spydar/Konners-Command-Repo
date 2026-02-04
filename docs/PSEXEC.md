@@ -1,258 +1,182 @@
-# PsExec
+# PsExec Command Builder
 
-PsExec is a command-line utility from the Sysinternals suite that allows execution of processes on local or remote Windows systems by temporarily installing a service (`PSEXESVC`) on the target machine.
+Quickly build a PsExec command.  
+Nothing is executed — this only generates a command you can copy and run manually.
 
-________________________
+---
 
-## Basic Usage
+## Target
 
-### Syntax
-~~~powershell
-PsExec \\COMPUTER [options] command [arguments]
-~~~
+<div class="psexec-grid">
 
-### Local Execution
-~~~powershell
-PsExec cmd.exe
-~~~
+<label class="important">
+  Target Computer
+  <input type="text" id="computer" placeholder="COMPUTER01">
+</label>
 
-### Remote Execution
-~~~powershell
-PsExec \\PC01 cmd.exe
-~~~
+</div>
 
-### Multiple Targets
-~~~powershell
-PsExec \\PC01,PC02,PC03 cmd.exe
-~~~
+---
 
-!!! note
-    Requires local administrator rights on the target system(s)
+## Presets
 
-________________________
+<button class="md-button md-button--primary" onclick="presetSystemCmd()">SYSTEM Interactive CMD</button>
+<button class="md-button" onclick="presetBasicCmd()">Basic CMD</button>
 
-## Authentication Flags
+---
 
-### -u (Username)
+## Options
 
-Specifies the user account used for execution.
+<div class="psexec-grid">
 
-~~~powershell
-PsExec \\PC01 -u DOMAIN\User cmd.exe
-~~~
+<label>
+  <input type="checkbox" id="accepteula">
+  Accept EULA -accepteula
+</label>
 
-### -p (Password)
+<label>
+  <input type="checkbox" id="nobanner">
+  No banner -nobanner
+</label>
 
-Specifies the password for the provided user.
+<label>
+  <input type="checkbox" id="system">
+  Run as SYSTEM -s
+</label>
 
-~~~powershell
-PsExec \\PC01 -u DOMAIN\User -p Password123 cmd.exe
-~~~
+<label>
+  <input type="checkbox" id="elevated">
+  Elevated token -h
+</label>
 
-!!! warning
-    Passwords are passed in plaintext on the command line. Avoid in reusable scripts where possible.
+<label>
+  <input type="checkbox" id="interactive">
+  Interactive -i
+</label>
 
-________________________
+<label>
+  <input type="checkbox" id="dontwait">
+  Don't wait -d
+</label>
 
-## Privilege & Execution Context
+<label>
+  <input type="checkbox" id="copy">
+  Copy executable -c
+</label>
 
-### -s (SYSTEM)
+<label>
+  <input type="checkbox" id="forcecopy">
+  Force copy -f
+</label>
 
-Runs the command under the Local SYSTEM account.
+<label>
+  Timeout (seconds) -n
+  <input type="number" id="timeout" placeholder="30">
+</label>
 
-~~~powershell
-PsExec \\PC01 -s cmd.exe
-~~~
+</div>
 
-Commonly used for:
-- SYSTEM-level registry changes  
-- Service or driver work  
-- Tools that must run as SYSTEM  
+---
 
-### -h (Elevated)
+## Command
 
-Runs the process elevated on systems with UAC enabled.
+<div class="psexec-grid">
 
-~~~powershell
-PsExec \\PC01 -h powershell.exe
-~~~
+<label>
+  Remote Command
+  <input type="text" id="command" value="cmd.exe">
+</label>
 
-Use when:
-- UAC is enabled  
-- You need full admin rights for the process  
+<label>
+  Arguments
+  <input type="text" id="arguments" placeholder="/c whoami">
+</label>
 
-### -i (Interactive)
+</div>
 
-Runs the process interactively on the remote desktop (visible to the logged-on user).
+---
 
-~~~powershell
-PsExec \\PC01 -i notepad.exe
-~~~
+## Generated Command
 
-!!! note
-    Use `-i` when you need a GUI application to appear on the user’s session (for example Notepad, installers, or other GUI tools).
-
-________________________
-
-## Execution Behavior Flags
-
-### -d (Non-blocking / Don't Wait)
-
-Does not wait for the process to exit (fire-and-forget).
-
-~~~powershell
-PsExec \\PC01 -d notepad.exe
-~~~
-
-### -w (Working Directory)
-
-Sets the working directory for the process.
-
-~~~powershell
-PsExec \\PC01 -w C:\Temp cmd.exe
-~~~
-
-### -low (Low Priority)
-
-Runs the process at low CPU priority.
-
-~~~powershell
-PsExec \\PC01 -low powershell.exe
-~~~
-
-________________________
-
-## File Transfer Flags
-
-### -c (Copy Executable)
-
-Copies the specified program to the remote system before execution.
-
-~~~powershell
-PsExec \\PC01 -c C:\Tools\Diag.exe
-~~~
-
-The file is copied to the remote system and deleted when the process exits (unless you specify otherwise).
-
-### -f (Force Overwrite)
-
-Forces overwrite of the remote file if it already exists (used with `-c`).
-
-~~~powershell
-PsExec \\PC01 -c -f C:\Tools\Diag.exe
-~~~
-
-### -v (Version Check)
-
-Copies the file only if the local version is newer than the remote version (used with `-c`).
-
-~~~powershell
-PsExec \\PC01 -c -v C:\Tools\Diag.exe
-~~~
-
-________________________
-
-## Connection & Service Options
-
-### -accepteula
-
-Automatically accepts the Sysinternals EULA.  
-Useful for scripting or first-time use on a system.
-
-~~~powershell
-PsExec -accepteula \\PC01 cmd.exe
-~~~
-
-### -n (Timeout)
-
-Specifies the connection timeout in seconds.
-
-~~~powershell
-PsExec \\PC01 -n 10 cmd.exe
-~~~
-
-### -r (Service Name)
-
-Specifies the name of the remote service PsExec creates, instead of the default `PSEXESVC`.
-
-~~~powershell
-PsExec \\PC01 -r TempExecSvc cmd.exe
-~~~
-
-________________________
-
-## Environment & Session Options
-
-### -e
-
-Does not load the specified account’s profile or environment (runs with a minimal environment).
-
-~~~powershell
-PsExec \\PC01 -e cmd.exe
-~~~
-
-________________________
-
-## Common Example Scenarios
-
-### Open a SYSTEM Command Prompt on a Remote Machine
-
-~~~powershell
-PsExec \\PC01 -s cmd.exe
-~~~
-
-________________________
-
-### Run PowerShell as SYSTEM (Detached)
-
-Runs PowerShell as SYSTEM and does not wait for it to exit.
-
-~~~powershell
-PsExec \\PC01 -s -d powershell.exe
-~~~
-
-________________________
-
-### Run a PowerShell Script on Multiple Machines
-
-~~~powershell
-PsExec \\PC01,PC02,PC03 -h powershell.exe -File C:\Scripts\Remediation.ps1
-~~~
-
-________________________
-
-### Copy and Execute a Tool on a Remote Machine
-
-~~~powershell
-PsExec \\PC01 -c C:\Tools\NetDiag.exe
-~~~
-
-________________________
-
-## Requirements & Network Notes
-
-- Target system must allow **service creation** and **SMB/RPC** access.  
-- TCP port **445 (SMB)** and related RPC traffic must be reachable.  
-- Account used must have **local admin** rights on the target.  
-
-!!! warning
-    PsExec activity is often monitored or blocked by EDR and security tools because it is frequently abused for lateral movement.
-
-________________________
-
-## Quick Reference
-
-### Most Common Pattern
-
-Run an elevated SYSTEM PowerShell session on a remote machine with EULA auto-accepted:
-
-~~~powershell
-PsExec -accepteula \\PC01 -s -h powershell.exe
-~~~
-
-Key points:
-- `-accepteula` → avoids the interactive license prompt  
-- `-s` → run as SYSTEM  
-- `-h` → elevate on UAC-enabled systems  
-
-________________________
+<textarea id="preview" rows="3" readonly style="width:100%; font-family: monospace;"></textarea>
+
+<button class="md-button md-button--primary" onclick="copyCommand()">Copy to Clipboard</button>
+
+---
+
+<script>
+function resetAll() {
+  document.querySelectorAll("input[type=checkbox]").forEach(c => c.checked = false);
+  document.querySelectorAll("input[type=text], input[type=number]").forEach(i => {
+    if (i.id !== "computer") i.value = "";
+  });
+  command.value = "cmd.exe";
+}
+
+function build() {
+  const p = [];
+  p.push("PsExec.exe");
+
+  if (accepteula.checked) p.push("-accepteula");
+  if (nobanner.checked) p.push("-nobanner");
+  if (system.checked) p.push("-s");
+  if (elevated.checked) p.push("-h");
+  if (interactive.checked) p.push("-i");
+  if (dontwait.checked) p.push("-d");
+  if (copy.checked) p.push("-c");
+  if (forcecopy.checked) p.push("-f");
+  if (timeout.value) p.push(`-n ${timeout.value}`);
+
+  p.push(computer.value ? `\\\\${computer.value}` : "\\\\<computer>");
+  p.push(command.value || "cmd.exe");
+
+  if (arguments.value) p.push(arguments.value);
+
+  preview.value = p.join(" ");
+}
+
+function presetSystemCmd() {
+  resetAll();
+  accepteula.checked = true;
+  system.checked = true;
+  interactive.checked = true;
+  command.value = "cmd.exe";
+  build();
+}
+
+function presetBasicCmd() {
+  resetAll();
+  accepteula.checked = true;
+  command.value = "cmd.exe";
+  build();
+}
+
+function copyCommand() {
+  navigator.clipboard.writeText(preview.value);
+}
+
+document.querySelectorAll("input").forEach(el => {
+  el.addEventListener("input", build);
+});
+
+build();
+</script>
+
+<style>
+.psexec-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0.75rem;
+}
+
+.psexec-grid label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+}
+
+.important input {
+  font-size: 1rem;
+  font-weight: 600;
+}
+</style>

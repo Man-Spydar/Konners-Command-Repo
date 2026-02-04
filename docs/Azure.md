@@ -15,9 +15,11 @@ Needed for all modern Azure / Entra ID management via Graph.
     ~~~powershell
     Install-Module -Name "Microsoft.Graph" -Force
     ~~~
+
 ~~~powershell
 Import-Module "Microsoft.Graph"
 ~~~
+
 ---
 
 ### Connect to Microsoft Graph (US Gov)

@@ -1,4 +1,6 @@
-site_name: Konner's Command Repository
+use_directory_urls: false
+
+site_name: Service Desk Command Repository
 
 theme:
   name: material
@@ -23,6 +25,7 @@ nav:
   - Anaconda & Python: Python-Anaconda.md
   - Azure: Azure.md
   - PS-Exec Helper: PSEXEC.md
+  - RoboCopy Helper: Robocopy.md
 
 markdown_extensions:
   - admonition

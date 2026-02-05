@@ -1,7 +1,9 @@
-# Common Paths
+# Common Paths (WIP)
 
 Frequently used Windows paths and locations.
 
-## Coming soon
+## Status
 
-Add common system and user paths here.
+This page is a work in progress and is being actively expanded.
+
+Expected additions: common system and user paths.

@@ -1,7 +1,9 @@
-# Permissions & Ownership
+# Permissions & Ownership (WIP)
 
 Notes and commands for investigating NTFS permissions and taking ownership.
 
-## Coming soon
+## Status
 
-Add common ownership and ACL repair commands here.
+This page is a work in progress and is being actively expanded.
+
+Expected additions: ownership recovery and ACL repair command patterns.

@@ -5,7 +5,7 @@
 This page explains what `pip` is, how it works, and how to use it correctly in this environment.
 
 In this environment, where Python is installed matters.
-Installing packages to the wrong location results in scripts and executables that cannot run due to application control policies.
+Installing packages to the wrong location results in scripts and executables that cannot run due to application control policies (Ivanti Blocks).
 
 ## What is `pip`?
 
@@ -50,11 +50,14 @@ Python must be installed in one of the following locations:
 - Standalone Python: `C:\Apps\PythonXX\`
 - Conda-managed environments: `C:\Apps\<env-name>\`
 
-Only these locations allow Python scripts and executables to run.
+Only these locations allow Python scripts and executables to be ran by "Developer Access" enabled users.
 
 ## Where `pip` lives
 
 `pip` lives inside a Python installation.
+
+!!! info "pip Folder Location"
+    You can usually find the `pip` folder located at *Python/Environment*\Lib\site-packages\pip"
 
 This means:
 
@@ -78,8 +81,8 @@ pip is not recognized as an internal or external command
 
 That usually means:
 
-- `pip.exe` exists
-- Its directory is not on `PATH`
+- `pip.exe` may exist but it is not on path
+- If pip exists, you should be able to run pip with `python -m pip install...` from the folder that the python.exe is located
 
 This is normal in locked-down enterprise environments.
 
@@ -138,9 +141,11 @@ python -m pip install numpy pandas
 !!! note
     Do not create Conda environments under the user profile.
 
+[Go to Conda Page](conda.md)
+
 ## IDEs vs Python (critical concept)
 
-IDEs do not install Python packages.
+IDEs do not necessarily install Python packages and can usually be "convinced" to use whatever python binary you want
 
 Examples:
 

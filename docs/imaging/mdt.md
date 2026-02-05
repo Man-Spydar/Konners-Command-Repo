@@ -1,7 +1,9 @@
-# MDT Commands
+# MDT Commands (WIP)
 
 Commands and notes for Microsoft Deployment Toolkit workflows.
 
-## Coming soon
+## Status
 
-Add MDT task sequence and deployment commands here.
+This page is a work in progress and is being actively expanded.
+
+Expected additions: MDT task sequence and deployment commands.

@@ -1,7 +1,9 @@
-# Office / Click-to-Run
+# Office / Click-to-Run (WIP)
 
 Commands and references for Office Click-to-Run deployment and repair.
 
-## Coming soon
+## Status
 
-Add Office deployment, uninstall, and repair commands here.
+This page is a work in progress and is being actively expanded.
+
+Expected additions: Office deployment, uninstall, and repair commands.

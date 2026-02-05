@@ -1,6 +1,6 @@
-# Service Desk Command Repository
+# Konner's Full Code - Repository
 
-Quick-access command references and tooling used across Service Desk and infrastructure workflows.
+Quick-access command references and tooling used across Konner's Full Code and infrastructure workflows.
 
 ---
 

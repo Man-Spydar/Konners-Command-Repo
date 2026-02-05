@@ -25,24 +25,24 @@ nav:
   - Files & Permissions:
       - Overview: files/index.md
       - Unblocking & Zone-ID: files/unblocking.md
-      - Permissions & Ownership: files/permissions.md
+      - Permissions & Ownership (WIP): files/permissions.md
       - Digital Signatures: files/signatures.md
 
   - Process & Execution:
       - Overview: execution/index.md
       - PsExec: execution/psexec.md
-      - RunAs / Elevation: execution/elevation.md
+      - RunAs / Elevation (WIP): execution/elevation.md
 
   - Software & Packages:
       - Overview: software/index.md
       - Appx / AppxPackage: software/appx.md
       - MSI & EXE Installs: software/installers.md
-      - Office / Click-to-Run: software/office.md
+      - Office / Click-to-Run (WIP): software/office.md
 
   - Imaging & Deployment:
       - Overview: imaging/index.md
-      - MDT Commands: imaging/mdt.md
-      - Logs & Troubleshooting: imaging/logs.md
+      - MDT Commands (WIP): imaging/mdt.md
+      - Logs & Troubleshooting (WIP): imaging/logs.md
       - Replication & Robocopy: imaging/robocopy.md
 
   - Python & Automation:
@@ -52,18 +52,18 @@ nav:
 
   - Networking:
       - Overview: networking/index.md
-      - DNS & IP Tools: networking/dns.md
-      - Connectivity Tests: networking/connectivity.md
+      - DNS & IP Tools (WIP): networking/dns.md
+      - Connectivity Tests (WIP): networking/connectivity.md
 
   - Windows Internals:
       - Overview: windows/index.md
       - Registry: windows/registry.md
-      - Services & Tasks: windows/services.md
+      - Services & Tasks (WIP): windows/services.md
 
   - Reference:
       - Overview: reference/index.md
-      - Exit Codes & Flags: reference/flags.md
-      - Common Paths: reference/paths.md
+      - Exit Codes & Flags (WIP): reference/flags.md
+      - Common Paths (WIP): reference/paths.md
 
 markdown_extensions:
   - admonition

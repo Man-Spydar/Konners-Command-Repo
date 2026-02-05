@@ -1,7 +1,9 @@
-# DNS & IP Tools
+# DNS & IP Tools (WIP)
 
 References for DNS queries, IP configuration, and related tooling.
 
-## Coming soon
+## Status
 
-Add common DNS lookup and IP troubleshooting commands here.
+This page is a work in progress and is being actively expanded.
+
+Expected additions: common DNS lookup and IP troubleshooting commands.

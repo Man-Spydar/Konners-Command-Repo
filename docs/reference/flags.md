@@ -1,7 +1,9 @@
-# Exit Codes & Flags
+# Exit Codes & Flags (WIP)
 
 Reference tables for common exit codes, status meanings, and flags.
 
-## Coming soon
+## Status
 
-Add exit code lookups and flag definitions here.
+This page is a work in progress and is being actively expanded.
+
+Expected additions: exit code lookups and flag definitions.

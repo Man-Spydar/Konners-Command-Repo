@@ -52,3 +52,24 @@
 .md-typeset a:hover {
   color: #ff6b6b;
 }
+
+/* ============================= */
+/* SIDEBAR USABILITY             */
+/* ============================= */
+
+/*
+  When served from a simple file server, ensure long navigation trees remain
+  reachable by constraining sidebar height to the viewport and enabling scroll.
+*/
+@media screen and (min-width: 76.25em) {
+  .md-sidebar--primary,
+  .md-sidebar--secondary {
+    height: calc(100vh - var(--md-header-height));
+    overflow-y: auto;
+  }
+
+  .md-sidebar__scrollwrap,
+  .md-sidebar__inner {
+    max-height: 100%;
+  }
+}

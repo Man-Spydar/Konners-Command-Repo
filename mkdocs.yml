@@ -27,6 +27,7 @@ nav:
       - Unblocking & Zone-ID: files/unblocking.md
       - Permissions & Ownership (WIP): files/permissions.md
       - Digital Signatures: files/signatures.md
+      - Robocopy Helper: files/robocopy.md
 
   - Process & Execution:
       - Overview: execution/index.md
@@ -39,20 +40,18 @@ nav:
       - MSI & EXE Installs: software/installers.md
       - Office / Click-to-Run (WIP): software/office.md
 
-  - Imaging & Deployment:
-      - Overview: imaging/index.md
-      - MDT Commands (WIP): imaging/mdt.md
-      - Logs & Troubleshooting (WIP): imaging/logs.md
-      - Replication & Robocopy: imaging/robocopy.md
-
   - Python & Automation:
       - Overview: python/index.md
       - Conda Environments: python/conda.md
       - pip Usage: python/pip.md
 
+
+  - Azure & Cloud Admin:
+      - Overview: cloud/index.md
+      - Admin PowerShell: cloud/powershell.md
   - Networking:
       - Overview: networking/index.md
-      - DNS & IP Tools (WIP): networking/dns.md
+      - DNS & IP Tools: networking/dns.md
       - Connectivity Tests (WIP): networking/connectivity.md
 
   - Windows Internals:

@@ -73,3 +73,40 @@
     max-height: 100%;
   }
 }
+
+/* ============================= */
+/* NAVIGATION LEGIBILITY         */
+/* ============================= */
+
+/* Stronger visual weight for top-level section headings in the left nav */
+.md-nav--primary > .md-nav__list > .md-nav__item--nested > .md-nav__link {
+  font-weight: 700;
+  color: #c6c9cf;
+  letter-spacing: 0.01em;
+}
+
+/* Make child pages feel clearly nested */
+.md-nav--primary .md-nav__item--nested .md-nav {
+  margin-left: 0.45rem;
+  padding-left: 0.65rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Add subtle "-" marker for second-level page links */
+.md-nav--primary .md-nav__item--nested .md-nav .md-nav__link {
+  position: relative;
+  padding-left: 0.9rem;
+  color: #e2e5ea;
+}
+
+.md-nav--primary .md-nav__item--nested .md-nav .md-nav__link::before {
+  content: "-";
+  position: absolute;
+  left: 0;
+  color: #8b93a1;
+}
+
+/* Keep active item highlighted but readable */
+.md-nav--primary .md-nav__item .md-nav__link--active {
+  color: #6ea8ff;
+}

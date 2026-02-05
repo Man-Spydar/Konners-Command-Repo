@@ -1,9 +1,5 @@
-# Imaging & Deployment
+# Imaging & Deployment (Archived)
 
-References for deployment tooling, imaging workflows, and copy utilities.
+This section is no longer maintained in navigation.
 
-## In this section
-
-- [MDT Commands](mdt.md)
-- [Logs & Troubleshooting](logs.md)
-- [Replication & Robocopy](robocopy.md)
+- Robocopy guidance moved to [Files & Permissions → Robocopy Helper](../files/robocopy.md).

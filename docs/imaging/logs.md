@@ -1,9 +1,3 @@
-# Logs & Troubleshooting (WIP)
+# Imaging Logs (Archived)
 
-Log locations and troubleshooting commands for imaging and deployment.
-
-## Status
-
-This page is a work in progress and is being actively expanded.
-
-Expected additions: common log paths and triage commands.
+This page is archived and intentionally excluded from the main navigation.

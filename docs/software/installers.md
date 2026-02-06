@@ -13,8 +13,10 @@ Pre-made installers and packaging commands.
 
 ---
 
-## Cloud Admin Connections (Moved)
+## Adobe Acro
 
-Cloud administration module setup and connection commands were moved to a dedicated Azure/Cloud section:
-
-- [Azure Cloud Admin PowerShell](../cloud/powershell.md)
+??? note "Silent Install Flags"
+    Run this from the directory where the EXE lives:
+    ```powershell
+    Start-Process ".\*ACROBATINSTALLER*.exe" -ArgumentList "/sAll /rs /rps /msi EULA_ACCEPT=YES" -Wait
+    ```

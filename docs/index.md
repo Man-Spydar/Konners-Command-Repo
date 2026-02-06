@@ -17,6 +17,13 @@ Quick-access command references and tooling used across Konner's Full Code and i
 
 ---
 
+## Heavy Hit'ers
+
+- [LAPS Passwords w/ Powershell](cloud/powershell.md#getting-laps-passwords-ms-graph-required)
+- [pip Installs Guide](python/pip.md)
+- [PS-EXEC Builder](execution/psexec.md)
+- [Robocopy Builder](files/robocopy.md)
+
 ## Why This Exists
 
 A lightweight, internal reference focused on speed and repeatability.

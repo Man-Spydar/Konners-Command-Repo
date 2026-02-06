@@ -17,8 +17,8 @@ Import-Module "Microsoft.Graph"
 ### Connect to Microsoft Graph (US Gov)
 
 ```powershell
-Connect-MgGraph \
-  -Scopes "Group.ReadWrite.All","Directory.AccessAsUser.All" \
+Connect-MgGraph `
+  -Scopes "Group.ReadWrite.All","Directory.AccessAsUser.All" `
   -Environment USGov
 ```
 
@@ -34,6 +34,30 @@ Connect-MgGraph \
     A new tab in your default browser will open prompting you to sign in. You should use your "onmicrosoft" account as your other account will not have useful permissions.
 
 ---
+
+### Getting LAPS Passwords (MS-Graph Required)
+
+This section is specifically for use powershell to directly pull a device's LAPS password from Azure
+
+??? info "Requirements (MS-Graph)"
+    You must import and connect to MS-graph in powershell before you an pull a device's LAPS password. WHen prompted you must use your `onmicrosoft` account to authenticate
+    
+    ```powershell
+    Import-Module "Microsoft.Graph"
+    Connect-MgGraph `
+        -Scopes "Group.ReadWrite.All","Directory.AccessAsUser.All" `
+        -Environment USGov
+    ```
+
+    !!! warning
+        The above command will only work if you have already installed the MS-graph module prior to running them
+
+```powershell
+get-lapsaadpassword -deviceid COMPUTER_NAME -includepassword -asplaintext
+```
+
+!!! note "-IncludePassword Argument"
+    The -AsPlainText argument will have no effect without using the new -Includepassword argument
 
 ## Azure AD (Entra ID – Legacy Module)
 

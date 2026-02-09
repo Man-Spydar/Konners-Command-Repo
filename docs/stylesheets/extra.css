@@ -65,10 +65,13 @@
   .md-sidebar--primary,
   .md-sidebar--secondary {
     height: calc(100vh - var(--md-header-height));
+  }
+
+  .md-sidebar__scrollwrap {
+    height: 100%;
     overflow-y: auto;
   }
 
-  .md-sidebar__scrollwrap,
   .md-sidebar__inner {
     max-height: 100%;
   }

@@ -62,7 +62,7 @@ nav:
   - Reference:
       - Overview: reference/index.md
       - Exit Codes & Flags (WIP): reference/flags.md
-      - Common Paths (WIP): reference/paths.md
+      - Common Paths: reference/paths.md
 
 markdown_extensions:
   - admonition
